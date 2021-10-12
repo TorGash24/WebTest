@@ -65,7 +65,7 @@ public class WbTest {
         String expectedResult = "Welcome to 99 Bottles of Beer";
 //        System.setProperty(chromeDriver, driverPathChrome);
         // Создаем драйвер, чтобы он начал выполнять действия
-//        WebDriver driver = new ChromeDriver();
+//        WebDriver driver = new ChromeDriver();git
 
         // Открываем страницу http
         driver.get(url);
@@ -75,7 +75,7 @@ public class WbTest {
         WebElement actualResult = driver.findElement(By.xpath("//div[@id='main']//h2[text()='Welcome to 99 Bottles of Beer']"));
         // Сравниваем - достаем с заголовка текс и сравниваем его с expectedResult.
         Assert.assertEquals(actualResult.getText(), "Welcome to 99 Bottles of Beer");
-
+        System.out.println(url);
 
 
     }
