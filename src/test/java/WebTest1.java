@@ -1,3 +1,4 @@
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,14 +15,14 @@ public class WebTest1 {
     public String driverPathChrome = "D:\\chromedriver_win32/chromedriver.exe";
     public String chromeDriver = "webdriver.chrome.driver";
 
-    // выполняется каждый раз перед тестом.
+
     @BeforeTest
     public void beforeTest () {
-        System.setProperty(chromeDriver, driverPathChrome);
+        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
 
     }
-    // выполняется каждый раз после тестов
+
     @AfterTest
     public void afterTest () {
         driver.close();
