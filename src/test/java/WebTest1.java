@@ -1,59 +1,53 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class WebTest1 {
-
-    public WebDriver driver;
-    public String url = "http://www.99-bottles-of-beer.net/";
-    public String driverPathChrome = "D:\\chromedriver_win32/chromedriver.exe";
-    public String chromeDriver = "webdriver.chrome.driver";
-
-
-    @BeforeTest
-    public void beforeTest () {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-
-    }
-
-    @AfterTest
-    public void afterTest () {
-        driver.close();
-        driver.quit();
-    }
+public class WebTest1 extends SettingDriver{
 
     @Test
     public void testFirst() throws InterruptedException {
-                          // ПЕРВАЯ ЧАСТЬ
-        // Путь к папке с файлом chromedriver
-//        String driverPathChrome = "D:\\chromedriver_win32/chromedriver.exe";
-//        String chromeDriver = "webdriver.chrome.driver";
-//        String url = "http://www.99-bottles-of-beer.net/";
         String expectedResult = "http://www.99-bottles-of-beer.net/";
-
-
-                         // ВТОРАЯ ЧАСТЬ
-        //System.setProperty(chromeDriver, driverPathChrome);
-        // Создаем драйвер, чтобы он начал выполнять действия
-        //WebDriver driver = new ChromeDriver();
-
-        // Открываем страницу http
         driver.get(url);
-        // Выставляем задержку в 3 сек
         Thread.sleep(3000);
-        // Прописываем actualResult - драйвер считает url со страницы
         String actualResult = driver.getCurrentUrl();
-
-
-                        // Третья ЧАСТЬ
         Assert.assertEquals(actualResult, expectedResult);
+    }
+    @Test
+    public void testTwo () throws InterruptedException {
+
+        String expectedResult = "Welcome to 99 Bottles of Beer";
+        driver.get(url);
+        Thread.sleep(3000);
+        WebElement actualResult = driver.findElement(By.xpath("//div[@id='main']//h2[text()='Welcome to 99 Bottles of Beer']"));
+        Assert.assertEquals(actualResult.getText(), expectedResult);
+    }
+
+    @Test
+    public void testThree () throws InterruptedException {
+
+        String expectedResult = "Error:";
+        driver.get(url);
+        Thread.sleep(3000);
+        WebElement SubmitNewLanguage = driver.findElement(By.linkText("Submit new Language"));
+        SubmitNewLanguage.click();
+        driver.findElement(By.xpath("//form[@id='addlanguage']/p/input[@name='language']")).sendKeys("English");
+        Thread.sleep(3000);
+        driver.findElement(By.xpath("//select[@name='category']")).click();
+        driver.findElement(By.xpath("//select[@name='category']/option[@value][3]")).click();
+        Thread.sleep(3000);
+        driver.findElement(By.xpath("//textarea[@name='code']")).sendKeys("IMPORTANT: Take your time! The more carefully " +
+                "you fill out this form (especially the language name and description), the easier it will be for " +
+                "us and the faster your language will show up on this page. We don't have the time to mess around " +
+                "with fixing your descriptions etc. Thanks for your understanding.\n");
+        driver.findElement(By.linkText("Top Lists")).click();
+        driver.findElement(By.linkText("Malbolge (real loop version)")).click();
+        driver.findElement(By.xpath("//select[@name='rate']")).click();
+        driver.findElement(By.xpath("//select[@name='rate']/option[6]")).click();
+        driver.findElement(By.xpath("//div[@id='voting']//input[@name='submitcomment'][@class='button']")).click();
+        Assert.assertEquals(driver.findElement(By.xpath("//*[text()= 'Error:']")).getText(), expectedResult);
+
+
     }
 
 }

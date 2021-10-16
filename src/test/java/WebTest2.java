@@ -3,15 +3,25 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class WebTest2 extends WebTest1{
+import java.util.List;
+
+public class WebTest2 extends SettingDriver{
+
 
     @Test
-    public void testTwo () throws InterruptedException {
-
-        String expectedResult = "Welcome to 99 Bottles of Beer";
+    public void testGuestBook () {
+        String expectedResult1 = "http://www.99-bottles-of-beer.net/search.html";
         driver.get(url);
-        Thread.sleep(3000);
-        WebElement actualResult = driver.findElement(By.xpath("//div[@id='main']//h2[text()='Welcome to 99 Bottles of Beer']"));
-        Assert.assertEquals(actualResult.getText(), expectedResult);
+        driver.findElement(By.xpath("//ul[@id='menu']//a[text()='Search Languages']")).click();
+        driver.findElement(By.xpath("//input[@name='search']")).sendKeys("Java");
+        List<WebElement> itemList = driver.findElements(By.xpath("//table[@id='category']//td[@bgcolor='#efefef']/a"));
+        for (int i =0; i <itemList.size(); i++) {
+            System.out.println(itemList.get(i));
+        }
+        System.out.println(itemList.get(1));
+
+
+
+
     }
 }
