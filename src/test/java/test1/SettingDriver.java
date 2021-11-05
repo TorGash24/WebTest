@@ -1,6 +1,9 @@
+package test1;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 
@@ -14,7 +17,7 @@ public class SettingDriver {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
     }
-    @AfterTest
+    @AfterMethod
     public void afterTest () {
         driver.close();
         driver.quit();
